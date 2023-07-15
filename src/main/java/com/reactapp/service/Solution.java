@@ -15,55 +15,46 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'maxMin' function below.
+     * Complete the 'superDigit' function below.
      *
      * The function is expected to return an INTEGER.
      * The function accepts following parameters:
-     *  1. INTEGER k
-     *  2. INTEGER_ARRAY arr
+     *  1. STRING n
+     *  2. INTEGER k
      */
 
-    public static int maxMin(int k, List<Integer> arr) {
+    public static int superDigit(String n, int k) {
     // Write your code here
-    Collections.sort(arr);
-    int min=Collections.max(arr);
-    int i=k-1;
-    for(int j=0;i<arr.size();j++){
-        int diff=arr.get(i)-arr.get(j);
-        if(diff<min)
-            min=diff;
-        i++;
+    int result=0;
+    if(n.length()==1)
+        return result;
+    else{
+        int sum=0;
+        for(int i=0;i<n.length();i++){
+        sum+=Integer.parseInt(String.valueOf(n.charAt(i)));
+        }
+        n=String.valueOf(sum*k);
+        result=sum*k;
+        return superDigit(n, 1);
     }
-   
-    return min;
-
+        
+    
     }
 
 }
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-        String outputDirectory = "/Users/bhupeshyedla/Documents/Solution.txt"; // Replace with your desired output directory
-        System.setProperty("OUTPUT_PATH", outputDirectory);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("OUTPUT_PATH")));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int n = Integer.parseInt(bufferedReader.readLine().trim());
+        String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
 
-        int k = Integer.parseInt(bufferedReader.readLine().trim());
+        String n = firstMultipleInput[0];
 
-        List<Integer> arr = IntStream.range(0, n).mapToObj(i -> {
-            try {
-                return bufferedReader.readLine().replaceAll("\\s+$", "");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        })
-            .map(String::trim)
-            .map(Integer::parseInt)
-            .collect(toList());
+        int k = Integer.parseInt(firstMultipleInput[1]);
 
-        int result = Result.maxMin(k, arr);
+        int result = Result.superDigit(n, k);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();
@@ -72,3 +63,97 @@ public class Solution {
         bufferedWriter.close();
     }
 }
+
+
+// package com.codility.selenium;
+
+// import org.openqa.selenium.By;
+// import org.openqa.selenium.Keys;
+// import org.openqa.selenium.WebElement;
+// import org.openqa.selenium.interactions.Actions;
+
+// import org.junit.Test;
+// import org.junit.Before;
+// import org.junit.After;
+// import static org.junit.Assert.assertTrue;
+// import static org.junit.Assert.assertEquals;
+
+// import java.util.ArrayList;
+// import java.util.Arrays;
+// import java.util.List;
+
+// public class AppTest extends BaseTest {
+
+//     @Before
+//     public void setup(){
+//         WebDriver webDriver=null;
+//         String url="https://codility-frontend-prod-eu.s3.amazonaws.com/media/task_static/qa_login_page/9a83bda125cd7398f9f482a3d6d45ea4/static/attachments/reference_page.html";
+//         webDriver.get(url);
+//     }
+
+//     @Test
+//     public void verifyEmailPasswordFieldsExists() {
+//         WebElement email = webDriver.findElement(By.id("email-input"));
+//         WebElement password = webDriver.findElement(By.id("password-input"));
+//         assertEquals(email.isDisplayed(),true);
+//         assertEquals(password.isDisplayed(),true);
+//     }
+
+//     @Test
+//     public void verifyValidLogin() {
+//         WebElement email = webDriver.findElement(By.id("email-input"));
+//         WebElement password = webDriver.findElement(By.id("password-input"));
+//         WebElement submit = webDriver.findElement(By.id("login-button"));
+//         WebElement success = webDriver.findElement(By.xpath("//div[@class='message success']"));
+//         email.sendKeys("login@codility.com");
+//         password.sendKeys("password");
+//         submit.click();
+//         assertEquals(success.getText(),"Welcome to Codility");
+//     }
+
+//     @Test
+//     public void verifyInvalidLogin() {
+//         WebElement email = webDriver.findElement(By.id("email-input"));
+//         WebElement password = webDriver.findElement(By.id("password-input"));
+//         WebElement submit = webDriver.findElement(By.id("login-button"));
+//         WebElement error = webDriver.findElement(By.xpath("//div[@class='message error']"));
+//         email.sendKeys("unknown@codility.com");
+//         password.sendKeys("password");
+//         submit.click();
+//         assertEquals(error.getText(),"You shall not pass! Arr!");
+//     }
+
+//     @Test
+//     public void validateEmailField() {
+//         WebElement email = webDriver.findElement(By.id("email-input"));
+//         WebElement password = webDriver.findElement(By.id("password-input"));
+//         WebElement submit = webDriver.findElement(By.id("login-button"));
+//         WebElement invalidEmail = webDriver.findElement(By.xpath("//div[@class='validation error']"));
+//         email.sendKeys("unknowncodility.com");
+//         password.sendKeys("password");
+//         submit.click();
+//         assertEquals(invalidEmail.getText(),"Enter a valid email");
+//     }
+
+//     @Test
+//     public void validateEmailPasswordFields() {
+//         WebElement email = webDriver.findElement(By.id("email-input"));
+//         WebElement password = webDriver.findElement(By.id("password-input"));
+//         WebElement submit = webDriver.findElement(By.id("login-button"));
+//         WebElement emptyEmail = webDriver.findElement(By.xpath("(//div[@class='validation error'])[0]"));
+//         WebElement emptyPassword = webDriver.findElement(By.xpath("(//div[@class='validation error'])[1]"));
+//         email.sendKeys("");
+//         password.sendKeys("");
+//         submit.click();
+//         assertEquals(emptyEmail.getText(),"Email is required");
+//         assertEquals(emptyPassword.getText(),"Password is required");
+//     }
+
+//     @After
+//     public void tearDown(){
+//         webDriver.close();
+//     }
+// }
+
+
+

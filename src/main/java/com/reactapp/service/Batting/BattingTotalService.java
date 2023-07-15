@@ -1,4 +1,4 @@
-package com.reactapp.service;
+package com.reactapp.service.Batting;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

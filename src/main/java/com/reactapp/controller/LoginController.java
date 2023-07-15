@@ -1,16 +1,19 @@
 package com.reactapp.controller;
 
-import com.reactapp.service.BattingService;
-import com.reactapp.service.BattingTotalService;
-import com.reactapp.service.BowlingService;
-import com.reactapp.service.LoginRepo;
-import com.reactapp.service.LoginService;
+import com.reactapp.service.Batting.BattingService;
+import com.reactapp.service.Batting.BattingTotalService;
+import com.reactapp.service.Bowling.BowlingService;
+import com.reactapp.service.InningsData.InningsDataService;
+import com.reactapp.service.Login.LoginRepo;
+import com.reactapp.service.Login.LoginService;
+import com.reactapp.service.Teams.TeamsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reactapp.model.Batting;
 import com.reactapp.model.BattingTotal;
 import com.reactapp.model.Bowling;
 import com.reactapp.model.InningsData;
 import com.reactapp.model.Login;
+import com.reactapp.model.Teams;
 
 import java.util.List;
 
@@ -31,6 +34,12 @@ public class LoginController {
 
     @Autowired
     private BattingTotalService battingTotalService;
+
+    @Autowired
+    private InningsDataService inningsDataService;
+
+    @Autowired
+    private TeamsService teamsService;
 
     @Autowired
     private LoginRepo repo;
@@ -66,6 +75,8 @@ public class LoginController {
             storeBattingData(inningsData.getBatting());
             storeBowlingData(inningsData.getBowling());
             storeBattingTotalData(inningsData.getBattingTotal());
+            storeInningsData(inningsData);
+            storeTeamsData(inningsData.getTeams());
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -105,6 +116,24 @@ public class LoginController {
             battingTotalService.saveBattingTotal(battingTotals);
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void storeInningsData(InningsData inningsData){
+        try{
+            inningsDataService.saveInnings(inningsData);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private void storeTeamsData(Teams teams){
+        try{
+            teamsService.saveTeams(teams);
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }

@@ -1,4 +1,4 @@
-package com.reactapp.service;
+package com.reactapp.service.Bowling;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.reactapp.service;
+package com.reactapp.service.Bowling;
 
 import java.util.ArrayList;
 import java.util.List;
